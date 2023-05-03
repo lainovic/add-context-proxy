@@ -2,7 +2,6 @@
 import { v4 as uuid } from "uuid";
 import Cors from 'cors'
 import { createClient } from '@supabase/supabase-js'
-import { staticPageGenerationTimeout } from "../../../next.config";
 
 const dbUrl = process.env.SUPABASE_URL
 const dbKey = process.env.SUPABASE_KEY
@@ -25,13 +24,15 @@ function runMiddleware(req, res, fn) {
 
 async function handler(req, res) {
   await runMiddleware(req, res, cors);
-  console.log(`---> ${req.body}`);
-  res.json({ url: uuid() });
-  const { error } = await db.from("contexts").insert();
+  const { imageUrl, text } = JSON.parse(req.body);
+  const { data, error } = await db
+    .from("Context")
+    .insert({ imageUrl, text })
+    .select()
   if (error) {
-    res.status(500).json( { error } );
+    res.status(500).json({ error });
   }
-  // TODO return the URL of the new entity.
+  res.json({ data: data[0] });
 };
 
 export default handler;
