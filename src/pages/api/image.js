@@ -56,11 +56,13 @@ async function handler(req, res) {
         reject({ error });
       } else {
         resolve({
-          url: `${db.storage.
-            from("images").
-            getPublicUrl(data.path).
-            data.publicUrl
-            }`
+          data: {
+            url: `${db.storage.
+              from("images").
+              getPublicUrl(data.path).
+              data.publicUrl
+              }`
+          }
         });
       }
     });
