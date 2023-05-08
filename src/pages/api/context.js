@@ -24,6 +24,8 @@ function runMiddleware(req, res, fn) {
 
 async function handler(req, res) {
   await runMiddleware(req, res, cors);
+  console.log(`---> using supabase ${dbUrl}`);
+  console.log(`---> received ${req.method}`);
   if (req.method === "GET") {
     const { query } = parse(req.url, true);
     const id = query['id'];
