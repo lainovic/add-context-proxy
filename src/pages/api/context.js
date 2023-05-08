@@ -5,6 +5,7 @@ import { parse } from 'url'
 
 const dbUrl = process.env.SUPABASE_URL
 const dbKey = process.env.SUPABASE_KEY
+console.log(`---> using supabase ${dbUrl}`);
 const db = createClient(dbUrl, dbKey)
 
 const cors = Cors({
